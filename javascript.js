@@ -85,19 +85,23 @@ $(document).ready(function () {
         }
 
         else {
-            for (i = 0; i < searchHistory.length; i++);
+            $("#historyBtns").html("");
+            for (i = 0; i < searchHistory.length; i++) {
+            console.log(searchHistory);
             console.log(searchHistory[i]);
             var historyBtn = $("<button>").attr("class", "btn btn-outline-info mt-3");
             historyBtn.text(searchHistory[i]);
             historyBtn.attr("data-value", searchHistory[i]);
             $("#historyBtns").append(historyBtn);
+            }
         }
 
     }; //renderHistoryBtns end tag
 
 
     $("historyBtn").on("click", function () {
-        searchName = $(this).data - value.value;
+        console.log("test");
+        searchName = $(this).data-value.val();
 
         currentCond();
         futureCond();
@@ -153,7 +157,7 @@ $(document).ready(function () {
 
     function uvCond() {
 
-        var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + long + "&cnt=3&appid=cbd3aab5a681fb72ebf5cc9991e5f320";
+        var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + long + "&appid=cbd3aab5a681fb72ebf5cc9991e5f320";
 
         $.ajax({
             url: uvURL,
@@ -183,7 +187,7 @@ $(document).ready(function () {
 
     function futureCond() {
 
-        var futureURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchName + "&cnt=5&appid=cbd3aab5a681fb72ebf5cc9991e5f320";
+        var futureURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + searchName + "&appid=cbd3aab5a681fb72ebf5cc9991e5f320";
 
         $.ajax({
             url: futureURL,
