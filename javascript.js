@@ -6,7 +6,6 @@ $(document).ready(function () {
     var lat;
     var long;
     var unixtimestamp;
-    //   var convdataTime;
     var mo;
     var da;
     var ye;
@@ -73,6 +72,8 @@ $(document).ready(function () {
         //   oneCall();
         renderHistoryBtns();
 
+      //  $("#searchName").attr("placeholder", "City Name");
+
 
 
     }); //onclidk end tag
@@ -103,9 +104,16 @@ $(document).ready(function () {
     }; //renderHistoryBtns end tag
 
 
-    $("#historyBtns").on("click", function () {
+    $(document).on("click", ".btn-outline-info", function () {
+        $("#currentCond").html("");
+        $("#futureCond").html("");
+        $("#cityName").html("");
+
+        $("#uv").html("");
+
         console.log("test");
-        searchName = $(this).data - value;
+        console.log(this);
+        searchName = $(this).data("value");
         console.log(searchName);
 
         currentCond();
@@ -160,7 +168,13 @@ $(document).ready(function () {
             uvCond();
 
 
-        });//ajax.then call end tag
+        })
+        
+        // .error(function(){
+        //     alert=("Invalid City Name");
+
+
+        // }) 
 
     }; // currentCond func end tag
 
@@ -257,7 +271,5 @@ $(document).ready(function () {
         }) //ajax.then end tag
 
     }; //one call end tag
-
-
 
 }); //doc ready end tag
