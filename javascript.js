@@ -35,7 +35,7 @@ $(document).ready(function () {
             searchName = lastSearch;
 
             currentCond();
-          //  oneCall();
+            //  oneCall();
             renderHistoryBtns();
         }
     }; //getLS end tag
@@ -70,8 +70,9 @@ $(document).ready(function () {
         localStorage.setItem("history", JSON.stringify(searchHistory));
 
         currentCond();
-     //   oneCall();
+        //   oneCall();
         renderHistoryBtns();
+
 
 
     }); //onclidk end tag
@@ -90,28 +91,34 @@ $(document).ready(function () {
         else {
             $("#historyBtns").html("");
             for (i = 0; i < searchHistory.length; i++) {
-            console.log(searchHistory);
-            console.log(searchHistory[i]);
-            var historyBtn = $("<button>").attr("class", "btn btn-outline-info mt-3");
-            historyBtn.text(searchHistory[i]);
-            historyBtn.attr("data-value", searchHistory[i]);
-            $("#historyBtns").prepend(historyBtn);
+                console.log(searchHistory);
+                console.log(searchHistory[i]);
+                var historyBtn = $("<button>").attr("class", "btn btn-outline-info mt-3");
+                historyBtn.text(searchHistory[i]);
+                historyBtn.attr("data-value", searchHistory[i]);
+                $("#historyBtns").prepend(historyBtn);
             }
         }
 
     }; //renderHistoryBtns end tag
 
 
-    $("historyBtn").on("click", function () {
+    $("#historyBtns").on("click", function () {
         console.log("test");
-        searchName = $(this).data-value.val();
+        searchName = $(this).data - value;
+        console.log(searchName);
 
         currentCond();
-     //   oneCall();
+        //   oneCall();
 
     }); //histBtn on click end tag
 
+    $("#clear").on("click", function () {
+        localStorage.clear();
 
+        $("#historyBtns").html("");
+
+    }); //clear button end tag
 
     //API calls for current conditions and one for future conditions
     //get/set data for current conditions
@@ -169,7 +176,23 @@ $(document).ready(function () {
         }).then(function (uvData) {
             console.log(uvData);
             var uv = uvData.value;
-            $("#uv").append("UV Index : " + uv);
+            var uvColor = $("<span>").text(uv);
+
+            if (uv <= 3) {
+                uvColor.attr("class", "bg-success p-2 text-light rounded-sm");
+            }
+            else if (uv > 3 && uv <= 8) {
+                uvColor.attr("class", "bg-warning p-2 text-light rounded-sm");
+            }
+
+            else if (uv > 8 && uv <= 10) {
+                uvColor.attr("class", "bg-danger p-2 text-light rounded-sm");
+            }
+
+
+            $("#uv").append("UV Index : ");
+            $("#uv").append(uvColor);
+
 
 
         });//ajax.then call end tag
@@ -201,35 +224,35 @@ $(document).ready(function () {
             console.log(oneData);
 
             var forecastHeader = $("<div>").attr("class", "h3").text("Five Day Forecast");
-           var futureDiv = $("<div>");
+            var futureDiv = $("<div>");
 
             var data = oneData.daily;
 
-            for (i=0; i<5; i++) {
+            for (i = 0; i < 5; i++) {
 
-            var day = $("<div>").attr("class", "card m-1 p-2 text-light bg-primary float-left");
+                var day = $("<div>").attr("class", "card m-1 p-2 text-light bg-primary float-left");
 
 
-            var dailyHigh = $("<p>").text("High : " + data[i].temp.max.toFixed(1) + "\u00B0 F");
-            var dailyIconId = data[i].weather[0].icon;
-            console.log(dailyIconId);
-            var dailyIcon = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + dailyIconId + "@2x.png");
-            var dailyHum = $("<p>").text("Humidity : " + data[i].humidity + "%");
-            unixtimestamp = data[i].dt;
- 
-            convertUnixDate();
+                var dailyHigh = $("<p>").text("High : " + data[i].temp.max.toFixed(1) + "\u00B0 F");
+                var dailyIconId = data[i].weather[0].icon;
+                console.log(dailyIconId);
+                var dailyIcon = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + dailyIconId + "@2x.png");
+                var dailyHum = $("<p>").text("Humidity : " + data[i].humidity + "%");
+                unixtimestamp = data[i].dt;
 
-            var forcecastDate = $("<p>").attr("class", "h5").text(mo + " " + da + ", " + ye);
+                convertUnixDate();
 
-            day.append(forcecastDate, dailyIcon, dailyHigh, dailyHum);
+                var forcecastDate = $("<p>").attr("class", "h5").text(mo + " " + da + ", " + ye);
 
-            futureDiv.append(day);
-            
-                
+                day.append(forcecastDate, dailyIcon, dailyHigh, dailyHum);
+
+                futureDiv.append(day);
+
+
             };
 
             $("#futureCond").append(forecastHeader, futureDiv);
-        
+
 
         }) //ajax.then end tag
 
