@@ -135,7 +135,7 @@ $(document).ready(function () {
 
     function currentCond() {
 
-        var currentURL = "http://api.openweathermap.org/data/2.5/weather?q=" + searchName + "&appid=cbd3aab5a681fb72ebf5cc9991e5f320";
+        var currentURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchName + "&appid=cbd3aab5a681fb72ebf5cc9991e5f320";
 
         $.ajax({
             url: currentURL,
@@ -151,7 +151,7 @@ $(document).ready(function () {
             oneCall();
 
             var city = $("<h2>").text(currentData.name + " (" + mo + " " + da + ", " + ye + ") ").attr("class", "float-left");
-            var condIcon = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + currentData.weather[0].icon + ".png");
+            var condIcon = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + currentData.weather[0].icon + ".png");
             condIcon.attr("class", "clear-float");
             $("#cityName").append(city, condIcon);
 
@@ -184,7 +184,7 @@ $(document).ready(function () {
 
     function uvCond() {
 
-        var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + long + "&appid=cbd3aab5a681fb72ebf5cc9991e5f320";
+        var uvURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + long + "&appid=cbd3aab5a681fb72ebf5cc9991e5f320";
 
         $.ajax({
             url: uvURL,
@@ -227,7 +227,7 @@ $(document).ready(function () {
         da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(dateObject);
     };
 
-    
+
     //get/set data for future conditions
     //append page
 
@@ -255,7 +255,7 @@ $(document).ready(function () {
                 var dailyHigh = $("<p>").text("High : " + data[i].temp.max.toFixed(1) + "\u00B0 F");
                 var dailyIconId = data[i].weather[0].icon;
                 console.log(dailyIconId);
-                var dailyIcon = $("<img>").attr("src", "http://openweathermap.org/img/wn/" + dailyIconId + "@2x.png");
+                var dailyIcon = $("<img>").attr("src", "https://openweathermap.org/img/wn/" + dailyIconId + "@2x.png");
                 var dailyHum = $("<p>").text("Humidity : " + data[i].humidity + "%");
                 unixtimestamp = data[i].dt;
 
