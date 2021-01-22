@@ -10,17 +10,12 @@ $(document).ready(function () {
     var da;
     var ye;
 
-    //on load - get local storage data 
 
     getLS();
 
+    //on load - get local storage data 
     //render history buttons
     //load info for most recent search (using last index of history array)  
-    //search for city - onclick
-    //get history from local storage
-    //check to see if it's been searched before
-    //add to list if it's new, send list to local storage
-    //generate buttons from search history
 
     function getLS() {
         searchHistory = JSON.parse(localStorage.getItem("history"));
@@ -34,10 +29,15 @@ $(document).ready(function () {
             searchName = lastSearch;
 
             currentCond();
-            //  oneCall();
             renderHistoryBtns();
         }
     }; //getLS end tag
+
+    //search for city - onclick
+    //get history from local storage
+    //check to see if it's been searched before
+    //add to list if it's new, send list to local storage
+
 
 
     $("#search").on("click", function () {
@@ -69,15 +69,15 @@ $(document).ready(function () {
         localStorage.setItem("history", JSON.stringify(searchHistory));
 
         currentCond();
-        //   oneCall();
         renderHistoryBtns();
 
-      //  $("#searchName").attr("placeholder", "City Name");
+        //  $("#searchName").attr("placeholder", "City Name");
 
 
 
     }); //onclidk end tag
 
+    //generate buttons from search history
 
 
     function renderHistoryBtns() {
@@ -117,7 +117,7 @@ $(document).ready(function () {
         console.log(searchName);
 
         currentCond();
-        //   oneCall();
+
 
     }); //histBtn on click end tag
 
@@ -129,6 +129,7 @@ $(document).ready(function () {
     }); //clear button end tag
 
     //API calls for current conditions and one for future conditions
+
     //get/set data for current conditions
     //append page
 
@@ -169,7 +170,7 @@ $(document).ready(function () {
 
 
         })
-        
+
         // .error(function(){
         //     alert=("Invalid City Name");
 
@@ -177,6 +178,7 @@ $(document).ready(function () {
         // }) 
 
     }; // currentCond func end tag
+
 
     //UV Index call
 
@@ -213,6 +215,8 @@ $(document).ready(function () {
 
     }; // uvCond func end tag
 
+
+
     function convertUnixDate() {
 
         var milliseconds = unixtimestamp * 1000;
@@ -223,6 +227,7 @@ $(document).ready(function () {
         da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(dateObject);
     };
 
+    
     //get/set data for future conditions
     //append page
 
