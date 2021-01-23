@@ -15,6 +15,10 @@ The searched city is added to an array which is used to generate a list of histo
 
 ![search buttons](images/searchBtn.png)
 
+If the city is not recognized or misspelled or the search is performed without entering a city name the user is alerted and the data is not stored to the array:
+
+![error message](images/error.png)
+
 On reload, the page will display data for the most recent city searched using local storage.
 
 The Clear History button removes data from local storage and clears the history buttons from the page:
