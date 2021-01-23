@@ -34,9 +34,6 @@ $(document).ready(function () {
     }; //getLS end tag
 
     //search for city - onclick
-    //get history from local storage
-    //check to see if it's been searched before
-    //add to list if it's new, send list to local storage
 
 
 
@@ -48,32 +45,10 @@ $(document).ready(function () {
         $("#futureCond").html("");
 
         searchName = $("#searchName").val().trim();
-        lastSearch = searchName;
-
-        console.log(searchName);
-
-        searchHistory = JSON.parse(localStorage.getItem("history"));
-
-        if (searchHistory === null) {
-            searchHistory = [searchName];
-        }
-
-        else if ($.inArray(searchName, searchHistory) === -1) {
-            searchHistory.push(searchName);
-        }
-        else {
-            //error message?
-        }
-
-        localStorage.setItem("last", lastSearch);
-        localStorage.setItem("history", JSON.stringify(searchHistory));
 
         currentCond();
-        renderHistoryBtns();
 
-        //  $("#searchName").attr("placeholder", "City Name");
-
-
+        $("#searchName").val("");
 
     }); //onclidk end tag
 
@@ -141,12 +116,37 @@ $(document).ready(function () {
             url: currentURL,
             method: "GET",
         }).then(function (currentData) {
+
+            //get history from local storage
+            //check to see if it's been searched before
+            //add to list if it's new, send list to local storage
+
+
+            lastSearch = searchName;
+
+            console.log(searchName);
+
+            searchHistory = JSON.parse(localStorage.getItem("history"));
+
+            if (searchHistory === null) {
+                searchHistory = [searchName];
+            }
+
+            else if ($.inArray(searchName, searchHistory) === -1) {
+                searchHistory.push(searchName);
+            }
+
+            localStorage.setItem("last", lastSearch);
+            localStorage.setItem("history", JSON.stringify(searchHistory));
+            //******** */
+
             console.log(currentData);
 
             lat = parseInt(currentData.coord.lat);
             long = parseInt(currentData.coord.lon);
             unixtimestamp = parseInt(currentData.dt);
 
+            renderHistoryBtns(); //**** */
             convertUnixDate();
             oneCall();
 
@@ -171,11 +171,13 @@ $(document).ready(function () {
 
         })
 
-        // .error(function(){
-        //     alert=("Invalid City Name");
+            //condtion to catch err
 
+            .fail(function (err) {
+                console.log(err)
+                alert("Invalid entry. Please enter a real city/town")
+            })
 
-        // }) 
 
     }; // currentCond func end tag
 
