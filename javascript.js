@@ -33,9 +33,34 @@ $(document).ready(function () {
         }
     }; //getLS end tag
 
+    function setLS() {
+
+        //get history from local storage
+        //check to see if it's been searched before
+        //add to list if it's new, send list to local storage
+
+
+        lastSearch = searchName;
+
+        console.log(searchName);
+
+        searchHistory = JSON.parse(localStorage.getItem("history"));
+
+        if (searchHistory === null) {
+            searchHistory = [searchName];
+        }
+
+        else if ($.inArray(searchName, searchHistory) === -1) {
+            searchHistory.push(searchName);
+        }
+
+        localStorage.setItem("last", lastSearch);
+        localStorage.setItem("history", JSON.stringify(searchHistory));
+
+
+    };
+
     //search for city - onclick
-
-
 
     $("#search").on("click", function () {
 
@@ -117,36 +142,14 @@ $(document).ready(function () {
             method: "GET",
         }).then(function (currentData) {
 
-            //get history from local storage
-            //check to see if it's been searched before
-            //add to list if it's new, send list to local storage
-
-
-            lastSearch = searchName;
-
-            console.log(searchName);
-
-            searchHistory = JSON.parse(localStorage.getItem("history"));
-
-            if (searchHistory === null) {
-                searchHistory = [searchName];
-            }
-
-            else if ($.inArray(searchName, searchHistory) === -1) {
-                searchHistory.push(searchName);
-            }
-
-            localStorage.setItem("last", lastSearch);
-            localStorage.setItem("history", JSON.stringify(searchHistory));
-            //******** */
-
+            setLS();
+            renderHistoryBtns();
             console.log(currentData);
 
             lat = parseInt(currentData.coord.lat);
             long = parseInt(currentData.coord.lon);
             unixtimestamp = parseInt(currentData.dt);
 
-            renderHistoryBtns(); //**** */
             convertUnixDate();
             oneCall();
 
